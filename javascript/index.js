@@ -11,7 +11,7 @@
 //                    var     |      let    |      const
 // hoisting            yes           yes            yes
 // scope             function       block          block
-// inital value      undefined       -               - 
+// inital value      undefined       -               -
 
 // // function test() {
 //   if (true) {
@@ -39,7 +39,7 @@
 // 	console.log(`${this.name} is running!`);
 // };
 // function Employee(name, age, salary) {
-// 	Person.call(this, name, age);
+// 	Person.apply(this, [name, age]);
 // 	this.salary = salary;
 // }
 // Employee.prototype = Object.create(Person.prototype);
@@ -59,11 +59,11 @@
 //     console.log(`${this.name} is running!`);
 //   }
 // }
-// class Employee extends Person{
-//   constructor(name, age, salary) {
-//     super(name, age);
-//     this.salary = salary;
-//   }
+// class Employee extends Person {
+// 	constructor(name, age, salary) {
+// 		super(name, age);
+// 		this.salary = salary;
+// 	}
 // }
 // // immutable, mutable;
 // let obj = {};
@@ -200,14 +200,113 @@
 // fn(3, 5, 7);
 
 // * ~~~~~~~~~~~~~~~~~~~~~ obj clone;
+// // shallow copy deep copy
+// const obj = {
+//   n: 'n',
+//   roomlist: [12, 12, 41],
+//   date: new Date(),
+//   fn: function() {}
+// };
+// const obj1 = obj;
 
-// * ~~~~~~~~~~~~~~~~~~~~~ closure, iife, currying;
+// const obj2 = {
+//   ...obj,
+//   roomlist: [...obj.roomlist]
+// };
 
-// * ~~~~~~~~~~~~~~~~~~~~~ this;
+// const obj3 = JSON.parse(JSON.stringify(obj));
+// const obj4 = structuredClone(obj);
 
+// console.log('sturctured: ', obj4);
+// console.log(obj, obj3);
+
+// * ~~~~~~~~~~~~~~~~~~~~~ closure, iife, currying, high order function;
+
+// const callback = (a, b) => a + b;
+// const fn = limitedFunction(3, callback); // c
+
+// console.log(fn(2, 4)); // 6; [counter: 2]
+// console.log(fn(2, 4)); // 6; [counter: 1]
+// console.log(fn(2, 4)); // 6; [counter: 0]
+// console.log(fn(2, 4)); // over limited
+// console.log(fn(2, 4)); // over limited
+// console.log(fn(2, 4)); // over limited
+// console.log(fn(2, 4)); // over limited
+
+// function limitedFunction(num, callback) {
+// 	let counter = num;
+// 	return function (...args) {
+// 		if (counter === 0) {
+// 			return "over limited";
+// 		} else {
+// 			counter--;
+// 			return callback(...args);
+// 		}
+// 	};
+// }
+
+// (function (arg) {
+//   console.log('hello', arg);
+// }('hi'))
+
+// fn(4)(5); // 9
+// function fn(a) {
+//   return function(b) {
+//     console.log(a + b);
+//   }
+// }
+
+// const arr = [1, 2, 3, 4]; // each ele + 100;
+// // const plus1 = (ele) => {
+// //   return ele + 1;
+// // };
+// // const plus100 = (ele) => {
+// //   return ele + 100;
+// // };
+// const plus = (num) => {
+//   return (ele, i, thearr) => {
+//     return ele + num;
+//   }
+// }
+// console.log(arr.map(plus(1)));
+
+// * ~~~~~~~~~~~~~~~~~~~~~ this --> object;
 // * ~~~~~~~~~~~~~~~~~~~~~ arrow function;
 
-// * ~~~~~~~~~~~~~~~~~~~~~ event loop
+// module.exports.name = 'Dio'
+// console.log(this);
+
+// const obj = {
+// 	name: "Dio",
+// 	// fn: function() {
+// 	//   console.log('fn: ', this.name);
+
+// 	//   // (() => {
+// 	//   //   console.log('iife: ', this.name);
+// 	//   // })();
+
+// 	//   (function() {
+// 	//     console.log('iife: ', this);
+// 	//   })();
+// 	fn: () => {
+// 		console.log(this.name);
+// 	},
+// };
+// obj.fn();
+
+// call, apply, bind;
+// const obj = {
+// 	name: "Dio",
+// };
+// function getName(m, n, q, t, r) {
+// 	// args: 5
+// 	console.log(this.name, m, n);
+// }
+// const wrapperGetName = getName.bind(obj);
+// wrapperGetName(3, 4);
+
+// getName.call(obj, 3, 4); // args + 1
+// getName.apply(obj, [3, 4]); // this, [args]
 
 // & ~~~~~~~~~~~~~~~~~~~~~ interview questions;
 // const arr2 = [
@@ -215,7 +314,7 @@
 //   'MSFT',
 //   'BAC',
 //   ['JPM', 'TSLA'],
-//   ['DOW', 'COIN', 'MMM']
+//   ['DOW', ['COIN', ['MMM']]] // flat
 // ]; // ['AAPL', 'MSFT', 'BAC', 'JPM', 'TSLA', 'DOW', 'COIN', 'MMM']
 
 // const first = [
@@ -234,11 +333,70 @@
 //     { userid: 87, role: 'Shaman' },
 //     { userid: 12, role: 'Hunter' },
 // ];
+// // const third = [
+// //   { userid: 12, address: '098' },
+// // ];
+// console.log(solution(first, second));
+// function solution(...args) {
+//   const arr = args.reduce((acc, cur) => [...acc, ...cur], []);
+//   const map = {};
 
-// const fn = limitedFunction(3， callback); // c
+//   arr.forEach((e) => {
+//     map[e.userid] = {
+//       ...{userid: null, name: null, role: null},
+//       ...map[e.userid],
+//       ...e
+//     }
+//   });
+//   return Object.values(map);
+//   /* {
+//     2: { userid: 2, name: 'Velen' }, {...map[key], ...curobj}
+//   } */
+// }
+/* [
+  { userid: 2, name: 'Velen', role: 'Mage' },
+  { userid: 44, name: 'Cenarius', role: null },
+   ...
+] */
 
-// console.log( runAll(callback1, callback2, callback3)(6) ); 
+// const callback1 = (a) => a + 3;
+// const callback2 = (a) => a - 5;
+// const callback3 = (a) => a * 2;
 
+// console.log(runAll(callback1, callback2, callback3)(6));
+
+// function runAll(...fns) {
+//   return function(num) {
+//     return fns.reduce((acc, fn) => fn(acc), num);
+//   }
+// }
+
+// * ~~~~~~~~~~~~~~~~~~~~~ event loop
+
+// i === 5;
+// for (var i = 0; i < 5; i++) {
+// 	(function (v) {
+// 		setTimeout(() => console.log(v), (5 - v) * 1000);
+// 	})(i);
+// } // 0, 1, 2, 3, 4
+
+/* 
+  callstack: [() => console.log(i), 1s [4]]
+  async api: [
+    
+    
+    
+    
+    
+  ];
+  callback queue: [
+   
+    () => console.log(i), 2s [3]
+    () => console.log(i), 3s [2]
+    () => console.log(i), 4s [1]
+    () => console.log(v), 5s, [0]
+  ]
+*/
 
 // * ~~~~~~~~~~~~~~~~~~~~~ promise --> MyPromise;
 
