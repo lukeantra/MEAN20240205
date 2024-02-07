@@ -1,23 +1,4 @@
-// var a = undefined;
-
-/*
- * @class
- * what is javascript, ECMAScript
- * javascript vs. nodejs vs. ECMAScript
- *
- * Primitive Data
- * Object Data or reference Data
- *
- * coercion
- * equality == vs. ===
- *
- * var vs. let vs. const
- *
- * oop: Object oriented programming in JS
- * encapsulation; inheritance; Poly-morph-ism; abstraction;
- * constructer function, prototype chain
- */
-// // const a = 'test' // NaN
+// * ~~~~~~~~~~~~~~~~~~~ coercion
 // const arr = [];
 // const obj = {};
 // console.log(isNaN(a))
@@ -32,28 +13,35 @@
 // // }
 // console.log(a);
 //
+
+// * ~~~~~~~~~~~~~~~~~~~~ oop
 // function Person(name, age) {
 // 	let _name = name;
 // 	let _age = age;
 
-// Object.defineProperty(this, "name", {
-// 	get: function () {
-// 		return this._name;
-// 	},
-// 	set: function (newname) {
-// 		this._name = newname;
-// 	},
-// });
+//   Object.defineProperty(this, "name", {
+// 		get: function () {
+// 			return _name;
+// 		},
+// 		set: function (newname) {
+// 			_name = newname;
+// 		},
+// 	});
 // }
 // Person.prototype.run = function () {
-//   console.log(`${this._name} is running!`);
+// 	console.log(`${this.name} is running!`);
 // };
 // function Employee(name, age, salary) {
-//   Person.apply(this, [name, age]);
-//   this.salary = salary;
+// 	Person.call(this, name, age);
+// 	this.salary = salary;
 // }
 // Employee.prototype = Object.create(Person.prototype);
 // Employee.prototype.constructor = Employee;
+
+// const e = new Person("Dio", 99, 10);
+// e.run();
+// console.log(e.name);
+
 // es6: const and let, class
 // class Person{
 //   constructor(name, age) {
@@ -70,13 +58,7 @@
 //     this.salary = salary;
 //   }
 // }
-
-// const e = new Employee("Dio", 99, 10);
-// e.run();
-// console.log(e);
-
 // // immutable, mutable;
-
 // let obj = {};
 
 // // obj.name = 'Jojo';
@@ -86,7 +68,7 @@
 // }
 // console.log(obj);
 
-// loop;
+// * ~~~~~~~~~~~~~~~~~~~ loop;
 // const arr = [122, 123];
 // // console.log(arr['1']);
 // const obj = {
@@ -178,7 +160,7 @@
 //   console.log('key: ', ele[0], 'value: ', ele[1])
 // });
 
-// // destructure
+// * ~~~~~~~~~~~~~~~~~~~~~~~ destructure
 // const obj = {
 // 	name: "Jojo",
 // 	age: 12,
@@ -200,8 +182,7 @@
 // a = b;
 // b = tmp;
 
-
-// spreadoperator and restparameter
+// * ~~~~~~~~~~~~~~~~~~~~~ spreadoperator vs. restparameter
 
 // const arr = [1, 2, 3];
 // const narr = [1, 2, 3, 1, 2, 3, 3, 6];
