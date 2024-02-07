@@ -1,10 +1,17 @@
-// * ~~~~~~~~~~~~~~~~~~~ coercion
+// * ~~~~~~~~~~~~~~~~~~~ coercion;
 // const arr = [];
 // const obj = {};
 // console.log(isNaN(a))
 // console.log(Array.isArray(arr)); // 11;
 
 // console.log(require('module').wrapper);
+
+// * ~~~~~~~~~~~~~~~~~~~ var, let, const;
+//-----------------------------var vs. let vs. const-------------------------
+//                    var     |      let    |      const
+// hoisting            yes           yes            yes
+// scope             function       block          block
+// inital value      undefined       -               - 
 
 // // function test() {
 //   if (true) {
@@ -14,7 +21,7 @@
 // console.log(a);
 //
 
-// * ~~~~~~~~~~~~~~~~~~~~ oop
+// * ~~~~~~~~~~~~~~~~~~~~ oop;
 // function Person(name, age) {
 // 	let _name = name;
 // 	let _age = age;
@@ -160,7 +167,7 @@
 //   console.log('key: ', ele[0], 'value: ', ele[1])
 // });
 
-// * ~~~~~~~~~~~~~~~~~~~~~~~ destructure
+// * ~~~~~~~~~~~~~~~~~~~~~~~ destructure;
 // const obj = {
 // 	name: "Jojo",
 // 	age: 12,
@@ -182,7 +189,7 @@
 // a = b;
 // b = tmp;
 
-// * ~~~~~~~~~~~~~~~~~~~~~ spreadoperator vs. restparameter
+// * ~~~~~~~~~~~~~~~~~~~~~ spreadoperator vs. restparameter;
 
 // const arr = [1, 2, 3];
 // const narr = [1, 2, 3, 1, 2, 3, 3, 6];
@@ -191,3 +198,52 @@
 //   console.log(m, n, args);
 // }
 // fn(3, 5, 7);
+
+// * ~~~~~~~~~~~~~~~~~~~~~ obj clone;
+
+// * ~~~~~~~~~~~~~~~~~~~~~ closure, iife, currying;
+
+// * ~~~~~~~~~~~~~~~~~~~~~ this;
+
+// * ~~~~~~~~~~~~~~~~~~~~~ arrow function;
+
+// * ~~~~~~~~~~~~~~~~~~~~~ event loop
+
+// & ~~~~~~~~~~~~~~~~~~~~~ interview questions;
+// const arr2 = [
+//   'AAPL',
+//   'MSFT',
+//   'BAC',
+//   ['JPM', 'TSLA'],
+//   ['DOW', 'COIN', 'MMM']
+// ]; // ['AAPL', 'MSFT', 'BAC', 'JPM', 'TSLA', 'DOW', 'COIN', 'MMM']
+
+// const first = [
+//     { userid: 2, name: 'Velen' },
+//     { userid: 56, name: 'Illidan' },
+//     { userid: 23, name: 'Muradin' },
+//     { userid: 12, name: 'Sylvanas' },
+//     { userid: 44, name: 'Cenarius' },
+//     { userid: 4, name: 'Gul\'Dan' }
+// ];
+// const second = [
+//     { userid: 2, role: 'Mage' },
+//     { userid: 4, role: 'Worlock' },
+//     { userid: 56, role: 'Demon Hunter' },
+//     { userid: 66, role: 'Druid' },
+//     { userid: 87, role: 'Shaman' },
+//     { userid: 12, role: 'Hunter' },
+// ];
+
+// const fn = limitedFunction(3， callback); // c
+
+// console.log( runAll(callback1, callback2, callback3)(6) ); 
+
+
+// * ~~~~~~~~~~~~~~~~~~~~~ promise --> MyPromise;
+
+// & ~~~~~~~~~~~~~~~~~~~~~ interview questions;
+// const add = (a, b) => a + b;
+// const multiplyByTwo = (c) => c * 2;
+// example 1 // await promisifyFunction(add, 1, 1) should return 2
+// example 2 // await promisifyFunction(multiplyByTwo)(3).then(val => val + 1) should return 7
