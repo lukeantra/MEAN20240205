@@ -278,20 +278,21 @@
 
 // const obj = {
 // 	name: "Dio",
-// 	// fn: function() {
-// 	//   console.log('fn: ', this.name);
+// 	fn: function() {
+// 	  console.log('fn: ', this.name);
 
-// 	//   // (() => {
-// 	//   //   console.log('iife: ', this.name);
-// 	//   // })();
+// 	  (() => {
+// 	    console.log('iife: ', this.name);
+// 	  })();
 
-// 	//   (function() {
-// 	//     console.log('iife: ', this);
-// 	//   })();
-// 	fn: () => {
-// 		console.log(this.name);
-// 	},
-// };
+// 	  (function() {
+// 	    console.log('iife: ', this);
+// 	  })();
+// 	// fn: () => {
+// 	// 	console.log(this.name);
+// 	// },
+//   }
+// }
 // obj.fn();
 
 // call, apply, bind;
@@ -399,9 +400,251 @@
 */
 
 // * ~~~~~~~~~~~~~~~~~~~~~ promise --> MyPromise;
+// const foo = () => console.log("foo");
+// const randomTime = () => Math.floor(Math.random() * 6);
 
-// & ~~~~~~~~~~~~~~~~~~~~~ interview questions;
+// const callFnByRandomeTime = (callback) => {
+// 	const timer = randomTime();
+// 	console.log(timer);
+
+// 	setTimeout(callback, timer * 1000);
+// };
+
+// // callFnByRandomeTime(foo);
+// callFnByRandomeTime(() => {
+// 	callFnByRandomeTime(() => {
+// 		callFnByRandomeTime(() => {
+// 			callFnByRandomeTime(() => {
+// 				callFnByRandomeTime(() => {
+// 					callFnByRandomeTime(() => {
+// 						callFnByRandomeTime(() => {
+// 							callFnByRandomeTime(foo);
+// 						});
+// 					});
+// 				});
+// 			});
+// 		});
+// 	});
+// });
+// XMLHTTPREQUEST
+
+// function print(data) {
+//   console.log(data)
+// }
+
+// function getTodo(id) {
+//   return new Promise((res, rej) => {
+
+//     const baseUrl = "https://jsonplaceholder.typicode.com";
+//     const todoPath = "todos";
+
+//     const xhttp = new XMLHttpRequest();
+//     xhttp.onreadystatechange = function () {
+//       if (this.readyState == 4 && this.status == 200) {
+//         res(JSON.parse(xhttp.responseText)); // & --- resolve data;
+//       }
+//     };
+//     xhttp.open("GET", [baseUrl, todoPath, id].join("/"));
+//     xhttp.send();
+//   });
+// }
+// // [44, 33, 66]
+// getTodo(44)
+//   .then(data => { //  10mins
+//     print(data);
+//     return getTodo(33); // 10
+//   })
+//   .then(data => {
+//     print(data);
+//     return getTodo(66); // 10mins
+//   })
+//   .then(data => {
+//     print(data);
+//   }); // 10mins
+
+// for (const promise of promiseArr) {
+//   promise
+// }
+
+// // async await
+// (async function() {
+//   print(await getTodo(44));
+//   print(await getTodo(33));
+//   print(await getTodo(66));
+// })();
+
+// getTodo(print, 33);
+// getTodo(print, 66);
+
+// class MyPromise {
+// 	thenQueue = [];
+
+// 	constructor(executor) {
+// 		try {
+// 			executor(this.reslove.bind(this), this.reject);
+// 		} catch (error) {
+// 			this.catch(error);
+// 		}
+// 	}
+
+// 	reslove(resloveValue) {
+// 		try {
+// 			setTimeout(() => {
+// 				let val = resloveValue;
+// 				while (this.thenQueue.length) {
+// 					const fn = this.thenQueue.shift(); // shift, unshift, pop, push
+// 					if (val instanceof MyPromise) {
+// 						val.then((data) => {
+// 							val = fn(data);
+// 						});
+// 					} else {
+// 						val = fn(val);
+// 					}
+// 				}
+// 			}, 0);
+// 		} catch (error) {
+// 			this.catch(error);
+// 		}
+// 	}
+
+// 	reject = () => {
+// 		// console.log('from reject', this.name);
+// 	};
+
+// 	then(thenFn) {
+// 		this.thenQueue.push(thenFn);
+// 		return this;
+// 	}
+// 	catch(catchFn) {
+// 		this.catchQueue.push(catchFn);
+// 		return this;
+// 	}
+
+// 	static resolve(srv) {
+// 		return new MyPromise((res, _) => {
+// 			res(srv);
+// 		});
+// 	}
+// 	static reject(srjv) {
+// 		return new MyPromise((_, rej) => {
+// 			rej(srjv);
+// 		});
+// 	}
+//   static all(promiseArr) {
+//     return new MyPromise((res, rej) => {
+//       const resArr = new Array(promiseArr.length);
+//       let counter = 0;
+
+//       promiseArr.forEach((promise, i) => {
+//         if (promise instanceof MyPromise) {
+//           promise.then(data => {
+//             counter++;
+//             resArr[i] = data;
+//             if (counter === promiseArr.length) {
+//               res(resArr);
+//             }
+//           });
+//         } else {
+//           counter++;
+//           resArr[i] = promise;
+//           if (counter === promiseArr.length) {
+//             res(resArr);
+//           }
+//         }
+//       });
+//     });
+//   }
+// }
+
+// new MyPromise((resolve, reject) => {
+//   resolve(3); // ----> msgqueue
+// })
+// .then((resv) => {
+//   const newNum = resv + 'hello'; // 3hello
+//   return new MyPromise((res, rej) => {
+//     res(newNum)
+//   })
+// }).then((resv) => {
+//   console.log(resv + 200);
+// });
+
+// const promise1 = MyPromise.resolve(3);
+// const promise2 = 42;
+// const promise3 = new MyPromise((resolve, reject) => {
+// 	setTimeout(resolve, 100, 'foo');
+// 	// resolve("foo");
+// });
+// //              44,    33,      66
+// MyPromise.all([promise1, promise2, promise3]).then((values) => {
+// 	console.log(values);
+// });
+
+// // & ~~~~~~~~~~~~~~~~~~~~~ interview questions;
 // const add = (a, b) => a + b;
 // const multiplyByTwo = (c) => c * 2;
-// example 1 // await promisifyFunction(add, 1, 1) should return 2
-// example 2 // await promisifyFunction(multiplyByTwo)(3).then(val => val + 1) should return 7
+// // example 1 // await promisifyFunction(add)(1, 1) should return 2
+// // example 2 // await promisifyFunction(multiplyByTwo)(3).then(val => val + 1) should return 7
+
+// function promisifyFunction(cb) {
+//   return function(...args) {
+//     return new Promise((res) => {
+//       res(cb(...args));
+//     });
+//   }
+// }
+
+// (async () => {
+//   await promisifyFunction(add)(1, 1).then(console.log);
+//   await promisifyFunction(multiplyByTwo)(3).then(val => val + 1).then(console.log);
+// })();
+
+const baseUrl = "https://jsonplaceholder.typicode.com";
+const todoPath = "todos";
+
+function myFetch(url, options) {
+	return new Promise((res) => {
+		const method = options && options.method ? options.method : "GET";
+
+		const xhttp = new XMLHttpRequest();
+    xhttp.open(method, url);
+
+		if (options && options.headers) {
+			Object.entries(options.headers).forEach(([key, val]) => {
+				xhttp.setRequestHeader(key, val);
+			});
+		}
+		xhttp.onreadystatechange = function () {
+			if (
+				this.readyState == 4 &&
+				this.status >= 200 &&
+				this.status < 300
+			) {
+				// res(JSON.parse(xhttp.responseText)); // & --- resolve data;
+				res({
+					json: function () {
+						return Promise.resolve(JSON.parse(xhttp.responseText));
+					},
+				});
+			}
+		};
+		options && options.body ? xhttp.send(options.body) : xhttp.send();
+	});
+}
+
+myFetch([baseUrl, todoPath].join("/"), {
+	method: "POST",
+	body: JSON.stringify({
+		title: "foo",
+		body: "bar",
+		userId: 1,
+	}),
+	headers: {
+		"Content-type": "application/json; charset=UTF-8",
+	},
+})
+	.then((response) => response.json())
+	.then((json) => console.log(json));
+
+// myFetch([baseUrl, todoPath, 22].join('/'))
+//   .then((response) => response.json())
+//   .then((json) => console.log(json));
