@@ -15,11 +15,20 @@ const APIs = (() => {
 		fetch([baseUrl, todo, id].join("/"), {}).then((response) =>
 			response.json()
 		);
+	const addTodo = (newTodo) =>
+		fetch([baseUrl, todo].join("/"), {
+			method: "POST",
+			body: JSON.stringify(newTodo),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8",
+			},
+		}).then((response) => response.json());
 
 	return {
 		getTodos,
 		getTodo,
 		deleteTodo,
+		addTodo,
 	};
 })();
 
@@ -28,6 +37,7 @@ const View = (() => {
 	const tmpString = {
 		todolist: ".todolist-container",
 		deleteBtn: ".delete-btn",
+    inputbox: '.todolist-input'
 	};
 
 	const render = (ele, tmp) => {
@@ -38,8 +48,8 @@ const View = (() => {
 		arr.forEach(({ title, id }) => {
 			tmp += `
         <li>
-          <span>${title}</span>
-          <button id="${id}" class="delete-btn" onClick="">X</button>
+          <span>${id}-${title}</span>
+          <button id="${id}" class="delete-btn">X</button>
         </li>
       `;
 		});
@@ -55,53 +65,81 @@ const View = (() => {
 
 // * ~~~~~~~~~~~~~~~~~~~~~~~~~ Model ~~~~~~~~~~~~~~~~~~~~~~~~~
 const Model = ((api, view) => {
+	class State {
+		#todolist = [];
+		#elementUl = document.querySelector(view.tmpString.todolist);
 
-  class State {
-    #todolist = [];
+		// constructor(view) {
+		//   this.view = view;
+		// }
 
-    get todos() {
-      return this.#todolist;
-    }
+		get todos() {
+			return this.#todolist;
+		}
 
-    set todos(newList) {
-      this.#todolist = [...newList];
+		set todos(newList) {
+			this.#todolist = [...newList];
 
-      const elementUl = document.querySelector(view.tmpString.todolist);
-		  const tmp = view.createTmp(this.#todolist);
-		  view.render(elementUl, tmp);
+			const tmp = view.createTmp(this.#todolist);
+			view.render(this.#elementUl, tmp);
+		}
+	}
+  class Todo {
+    constructor(title) {
+      this.completed = false;
+      this.userId = 6;
+      this.title = title;
     }
   }
 
 	return {
 		...api,
-    State
+		State,
+    Todo
 	};
 })(APIs, View);
 
 // * ~~~~~~~~~~~~~~~~~~~~~~~~~ Controller ~~~~~~~~~~~~~~~~~~~~~~~~~
 const Controller = ((model, view) => {
-  const state = new model.State();
+	const state = new model.State();
+
+  const addTodo = () => {
+    const inputBox = document.querySelector(view.tmpString.inputbox);
+    inputBox.addEventListener('keyup', async e => {
+      if (e.key === 'Enter' && e.target.value.trim() !== '') {
+        const createTodo = new model.Todo(e.target.value);
+        const todo = await model.addTodo(createTodo);
+
+        state.todos = [todo, ...state.todos];
+        e.target.value = '';
+      }
+    });
+  }
 
 	const deleteTodo = () => {
 		const elementUl = document.querySelector(view.tmpString.todolist);
-		elementUl.addEventListener("click", (e) => {
+		elementUl.addEventListener("click", async (e) => {
 			if (e.target.className === "delete-btn") {
-        state.todos = state.todos.filter(ele => +ele.id !== +e.target.id);
+				state.todos = state.todos.filter(
+					(ele) => +ele.id !== +e.target.id
+				);
+				await model.deleteTodo(e.target.id);
 			}
 		});
 	};
 
 	const init = async () => {
-		state.todos = await model.getTodos();
+		state.todos = (await model.getTodos()).reverse();
 	};
 
 	const bootstrap = async () => {
 		await init();
 		deleteTodo();
-		// addTodo();
+		addTodo();
 	};
 
 	return { bootstrap };
 })(Model, View);
 
 Controller.bootstrap();
+
