@@ -1,0 +1,20 @@
+<h1>{{ todos[0].completed }}</h1>
+<button [ngStyle]="{ color: todos[0].completed ? 'red' : 'blue' }">
+  Completed
+</button>
+
+<button (click)="toggle()">Toggle Completed</button>
+
+<hr />
+<div>
+  <input [(ngModel)]="context" />
+</div>
+<h2>{{ context }}</h2>
+
+<ul>
+  <app-todo-item
+    *ngFor="let item of todos"
+    [item]="item"
+    (emitter)="getTodoId($event)"
+  ></app-todo-item>
+</ul>
