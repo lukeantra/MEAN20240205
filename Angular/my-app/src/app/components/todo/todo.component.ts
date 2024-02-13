@@ -1,5 +1,7 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Todo } from '../interfaces/todo.interface';
+import { TodoService } from '../../services/todo.service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-todo',
@@ -10,26 +12,23 @@ import { Todo } from '../interfaces/todo.interface';
 })
 export class TodoComponent implements OnInit {
   // val;
-  private readonly baseUrl = 'https://jsonplaceholder.typicode.com/todos';
-  context = 'hello angular';
-  todos: Todo[] = [];
+  todos$!: Observable<string[]>;
 
   // lifecycle;
-  constructor() {}
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    fetch(this.baseUrl)
-      .then((data) => data.json())
-      .then((todos) => {
-        this.todos = todos;
-      });
+    this.todos$ = this.todoService.todotSubject$;
+    this.todoService.getTodos().subscribe();
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    // this.sbp.unsubscribe();
+  }
 
-  // method;
-  toggle() {
-    this.todos[0].completed = !this.todos[0].completed;
-  }
+  // // method;
+  // toggle() {
+  //   this.todos[0].completed = !this.todos[0].completed;
+  // }
 
   getTodoId(id: number) {
     console.log('from todo item component: ', id);

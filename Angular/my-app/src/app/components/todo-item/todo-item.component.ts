@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -7,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Todo } from '../interfaces/todo.interface';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-todo-item',
@@ -14,17 +16,20 @@ import { Todo } from '../interfaces/todo.interface';
   styleUrl: './todo-item.component.scss',
 })
 export class TodoItemComponent {
-  @Input('item') todo!: Todo;
-  @Output() emitter = new EventEmitter();
+  // @Input('item') todo!: Todo;
+  // @Output() emitter = new EventEmitter();
 
-  constructor() {
-    console.log('from constructor: ', this.todo);
+  constructor(private todoService: TodoService) {
+    // console.log('from constructor: ', this.todo);
   }
   ngOnInit() {
-    console.log('from onInit: ', this.todo);
+    this.todoService.todotSubject$.subscribe((data) =>
+      console.log('from todo item: ', data)
+    );
+    // console.log('from onInit: ', this.todo);
   }
 
   emitTodoId() {
-    this.emitter.emit(this.todo.id);
+    // this.emitter.emit(this.todo.id);
   }
 }
