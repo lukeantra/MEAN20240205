@@ -17,10 +17,14 @@ export class SearchBoxComponent implements AfterViewInit, OnDestroy {
   @ViewChild('inputBox') inputBox!: ElementRef;
 
   ngAfterViewInit(): void {
-    this.subscription = fromEvent(
+    this.subscription = fromEvent<KeyboardEvent>(
       this.inputBox.nativeElement,
       'keyup'
-    ).subscribe();
+    ).subscribe((e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        console.log(this.inputBox.nativeElement.value);
+      }
+    });
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
