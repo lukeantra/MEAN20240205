@@ -1,5 +1,6 @@
 <main>
   <app-search-box />
+  <hr />
   <div>
     <div>
       <input type="checkbox" [(ngModel)]="showbooks" id="booklist" />
@@ -10,20 +11,26 @@
       <label for="wishlist">WishList</label>
     </div>
   </div>
+  <hr />
+  <div class="container">
+    <div class="list-container">
+      <section *ngIf="showbooks" class="fullwidth">
+        <h1>BookList</h1>
+        <ul class="fullwidth">
+          <app-book-card
+            *ngFor="let item of bookList"
+            [book]="item"
+            (click)="addCard(item)"
+          />
+        </ul>
+      </section>
+    </div>
 
-  <div>
-    <section *ngIf="showbooks">
-      <ul>
-        <app-book-card
-          *ngFor="let item of bookList"
-          [book]="item"
-          (click)="addCard(item)"
-        />
-      </ul>
-    </section>
-
-    <section *ngIf="showwishes">
-      <app-wishlist />
-    </section>
+    <div class="list-container">
+      <section *ngIf="showwishes" class="fullwidth">
+        <h1>WishList</h1>
+        <app-wishlist />
+      </section>
+    </div>
   </div>
 </main>

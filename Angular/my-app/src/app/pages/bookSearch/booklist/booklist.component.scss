@@ -1,1 +1,25 @@
+@import "../../../../shared.style.scss";
 
+main {
+  height: 100vh;
+  width: 100vw;
+  background-color: bisque;
+}
+.container {
+  width: 100vw;
+  @include flex(center, flex-start, row);
+}
+.list-container {
+  width: 50%;
+  height: 80%;
+  @include flex(flex-start, center, column);
+}
+.list-container:nth-child(1) {
+  background-color: bisque;
+}
+.list-container:nth-child(2) {
+  background-color: bisque;
+}
+.fullwidth {
+  width: $fullwidth;
+}

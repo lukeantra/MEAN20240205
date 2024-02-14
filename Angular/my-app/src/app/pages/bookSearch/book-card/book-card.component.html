@@ -1,9 +1,11 @@
 <main>
   <img [src]="book.img" alt="" />
   <section>
-    <p>{{ book.title }}</p>
-    <p>{{ book.publisher }}</p>
-    <p>{{ book.date }}</p>
-    <!-- <p>{{ book.description }}</p> -->
+    <p><strong>Title: </strong>{{ book.title }}</p>
+    <p><strong>Publisher: </strong>{{ book.publisher }}</p>
+    <p><strong>PublishDate: </strong>{{ book.date }}</p>
+    <p>
+      <strong>Description: </strong> {{ book.description | limistLength : 350 }}
+    </p>
   </section>
 </main>

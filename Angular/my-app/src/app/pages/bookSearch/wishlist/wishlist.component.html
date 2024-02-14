@@ -1,8 +1,8 @@
 <main>
-  <h1>WishList</h1>
   <ul *ngFor="let item of bookService.wishList$ | async">
     <li>
       <span>{{ item.title }}</span>
+      <button (click)="deleteFromWishes(item)">X</button>
     </li>
   </ul>
 </main>

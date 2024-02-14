@@ -1,0 +1,31 @@
+@import "../../../../shared.style.scss";
+
+:host,
+main,
+ul {
+  width: 100%;
+}
+li {
+  padding: 5px;
+  height: 40px;
+  width: 100%;
+  @include flex(space-between, center, row);
+}
+ul li span {
+  height: 100%;
+  line-height: 40px;
+  overflow: hidden;
+}
+ul li button {
+  margin-right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: red;
+}
+ul li button:hover {
+  font-size: 1.7rem;
+}
+ul li button:active {
+  font-size: 1.3rem;
+}

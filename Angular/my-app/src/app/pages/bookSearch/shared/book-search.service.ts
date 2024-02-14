@@ -41,8 +41,14 @@ export class BookSearchService {
   }
 
   addToWishList(bookitem: BookItem) {
+    if (this.wishList.find((e) => e.title === bookitem.title)) return;
     // this.wishlist.push(bookitem);
     // this.wishList$.next(this.wishlist);
     this.wishList$.next([...this.wishList, bookitem]);
+  }
+  deleteFromWishes(bookitem: BookItem) {
+    this.wishList$.next(
+      this.wishList.filter((e) => e.title !== bookitem.title)
+    );
   }
 }
