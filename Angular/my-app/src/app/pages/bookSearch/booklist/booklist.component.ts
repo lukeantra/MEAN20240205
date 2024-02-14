@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BookSearchService } from '../shared/book-search.service';
+import { BookItem } from '../shared/book.interface';
 
 @Component({
   selector: 'app-booklist',
@@ -8,5 +10,18 @@ import { Component } from '@angular/core';
 export class BooklistComponent {
   showbooks = true;
   showwishes = false;
-  bookList = [];
+  bookList: BookItem[] = [];
+
+  constructor(private bookService: BookSearchService) {}
+
+  ngOnInit(): void {
+    this.bookService.bookList$.subscribe((books) => {
+      console.log(books);
+      this.bookList = books;
+    });
+  }
+
+  addCard(book: BookItem) {
+    this.bookService.addToWishList(book);
+  }
 }

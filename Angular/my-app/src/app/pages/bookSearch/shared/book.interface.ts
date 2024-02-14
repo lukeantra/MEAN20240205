@@ -1,3 +1,11 @@
+export interface BookItem {
+  img: string;
+  title: string;
+  publisher: string;
+  date: string;
+  description: string;
+}
+
 export interface BookSearchRes {
   kind: string;
   totalItems: number;

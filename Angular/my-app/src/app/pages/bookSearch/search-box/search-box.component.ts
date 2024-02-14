@@ -4,8 +4,10 @@ import {
   ElementRef,
   OnDestroy,
   ViewChild,
+  inject,
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
+import { Subscription, fromEvent, of, switchMap, tap } from 'rxjs';
+import { BookSearchService } from '../shared/book-search.service';
 
 @Component({
   selector: 'app-search-box',
@@ -14,18 +16,28 @@ import { Subscription, fromEvent } from 'rxjs';
 })
 export class SearchBoxComponent implements AfterViewInit, OnDestroy {
   private subscription = new Subscription();
-  @ViewChild('inputBox') inputBox!: ElementRef;
+  @ViewChild('inputBox', { static: true }) inputBox!: ElementRef;
 
-  ngAfterViewInit(): void {
+  constructor(private bookService: BookSearchService) {}
+
+  ngOnInit(): void {
     this.subscription = fromEvent<KeyboardEvent>(
       this.inputBox.nativeElement,
       'keyup'
-    ).subscribe((e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        console.log(this.inputBox.nativeElement.value);
-      }
-    });
+    )
+      .pipe(
+        switchMap((e) => {
+          const bookname = this.inputBox.nativeElement.value;
+          if (e.key === 'Enter') {
+            return this.bookService.getBooks(bookname);
+          }
+          return of([]);
+        })
+      )
+      .subscribe();
   }
+
+  ngAfterViewInit(): void {}
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject, from, map, tap } from 'rxjs';
-import { Todo } from '../components/interfaces/todo.interface';
+import { Todo } from './todo.interface';
 
 @Injectable()
 export class TodoService {

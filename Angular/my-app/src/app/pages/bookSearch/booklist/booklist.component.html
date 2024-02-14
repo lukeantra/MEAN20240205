@@ -13,7 +13,13 @@
 
   <div>
     <section *ngIf="showbooks">
-      <p>booklist works!</p>
+      <ul>
+        <app-book-card
+          *ngFor="let item of bookList"
+          [book]="item"
+          (click)="addCard(item)"
+        />
+      </ul>
     </section>
 
     <section *ngIf="showwishes">

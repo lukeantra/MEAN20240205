@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BookSearchService } from '../shared/book-search.service';
 
 @Component({
   selector: 'app-wishlist',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './wishlist.component.scss',
 })
 export class WishlistComponent {
-  wishList = [];
+  constructor(public bookService: BookSearchService) {}
 }

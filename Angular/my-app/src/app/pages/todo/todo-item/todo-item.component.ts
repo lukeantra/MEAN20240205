@@ -7,8 +7,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Todo } from '../interfaces/todo.interface';
-import { TodoService } from '../../services/todo.service';
+import { Todo } from '../shared/todo.interface';
+import { TodoService } from '../shared/todo.service';
 
 @Component({
   selector: 'app-todo-item',

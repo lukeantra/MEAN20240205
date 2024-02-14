@@ -5,7 +5,8 @@ import { BookSearchService } from './shared/book-search.service';
 import { BooklistComponent } from './booklist/booklist.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
-import { FormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,7 @@ import { FormsModule } from '@angular/forms';
     SearchBoxComponent,
     WishlistComponent,
   ],
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, SharedModule, HttpClientModule],
   providers: [BookSearchService],
   exports: [BooklistComponent],
 })

@@ -1,1 +1,8 @@
-<p>wishlist works!</p>
+<main>
+  <h1>WishList</h1>
+  <ul *ngFor="let item of bookService.wishList$ | async">
+    <li>
+      <span>{{ item.title }}</span>
+    </li>
+  </ul>
+</main>
