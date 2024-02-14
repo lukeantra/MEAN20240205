@@ -5,6 +5,7 @@ import { BookSearchService } from './shared/book-search.service';
 import { BooklistComponent } from './booklist/booklist.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     SearchBoxComponent,
     WishlistComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   providers: [BookSearchService],
   exports: [BooklistComponent],
 })

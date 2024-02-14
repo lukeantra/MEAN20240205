@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './booklist.component.scss',
 })
 export class BooklistComponent {
+  showbooks = true;
+  showwishes = false;
   bookList = [];
 }

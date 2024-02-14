@@ -1,14 +1,28 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
+import { Subscription, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-search-box',
   templateUrl: './search-box.component.html',
   styleUrl: './search-box.component.scss',
 })
-export class SearchBoxComponent implements AfterViewInit {
+export class SearchBoxComponent implements AfterViewInit, OnDestroy {
+  private subscription = new Subscription();
   @ViewChild('inputBox') inputBox!: ElementRef;
 
   ngAfterViewInit(): void {
-    throw new Error('Method not implemented.');
+    this.subscription = fromEvent(
+      this.inputBox.nativeElement,
+      'keyup'
+    ).subscribe();
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

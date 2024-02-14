@@ -1,9 +1,23 @@
 <main>
   <app-search-box />
   <div>
-    <input type="checkbox" /> ShowBookList
-    <input type="checkbox" /> ShowWishList
+    <div>
+      <input type="checkbox" [(ngModel)]="showbooks" id="booklist" />
+      <label for="booklist">BookList</label>
+    </div>
+    <div>
+      <input type="checkbox" [(ngModel)]="showwishes" id="wishlist" />
+      <label for="wishlist">WishList</label>
+    </div>
   </div>
 
-  <p>booklist works!</p>
+  <div>
+    <section *ngIf="showbooks">
+      <p>booklist works!</p>
+    </section>
+
+    <section *ngIf="showwishes">
+      <app-wishlist />
+    </section>
+  </div>
 </main>
