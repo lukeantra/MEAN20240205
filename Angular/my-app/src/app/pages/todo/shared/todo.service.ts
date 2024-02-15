@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, from, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, from, map, tap } from 'rxjs';
 import { Todo } from './todo.interface';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class TodoService {
   private readonly baseUrl = 'https://jsonplaceholder.typicode.com';
   private todoPath = 'todos';
 
-  todotSubject$ = new Subject<string[]>();
+  todotSubject$ = new BehaviorSubject<Todo[]>([]);
 
   // getTodo$ = this.http.get<Todo[]>([this.baseUrl, this.todoPath].join('/'));
 
@@ -23,17 +23,13 @@ export class TodoService {
   getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>([this.baseUrl, this.todoPath].join('/')).pipe(
       tap((todos: Todo[]) => {
-        this.todotSubject$.next(
-          todos.reduce((acc, cur) => {
-            return [...acc, cur.title];
-          }, [] as string[])
-        );
+        this.todotSubject$.next(todos.reverse());
       })
-      // map((todos: Todo[]) => {
-      //   return todos.reduce((acc, cur) => {
-      //     return [...acc, cur.title];
-      //   }, [] as string[]);
-      // })
     );
+  }
+  delectTodo(id: number) {
+    const arr = this.todotSubject$.value.filter((e) => +e.id !== +id);
+    console.log(arr.length);
+    this.todotSubject$.next(arr);
   }
 }

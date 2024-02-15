@@ -12,7 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class TodoComponent implements OnInit {
   // val;
-  todos$!: Observable<string[]>;
+  todos$!: Observable<Todo[]>;
 
   // lifecycle;
   constructor(private todoService: TodoService) {}
@@ -30,7 +30,7 @@ export class TodoComponent implements OnInit {
   //   this.todos[0].completed = !this.todos[0].completed;
   // }
 
-  getTodoId(id: number) {
-    console.log('from todo item component: ', id);
+  delectTodo(id: number) {
+    this.todoService.delectTodo(id);
   }
 }

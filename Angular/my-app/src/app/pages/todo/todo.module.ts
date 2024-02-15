@@ -4,10 +4,12 @@ import { TodoComponent } from './todo/todo.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { TodoService } from './shared/todo.service';
 
 @NgModule({
   declarations: [TodoComponent, TodoItemComponent],
-  exports: [TodoComponent],
   imports: [CommonModule, SharedModule],
+  providers: [TodoService],
+  exports: [TodoComponent],
 })
 export class TodoModule {}

@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { TodoComponent } from './pages/todo/todo/todo.component';
-import { TodoItemComponent } from './pages/todo/todo-item/todo-item.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { TodoService } from './pages/todo/shared/todo.service';
+
+import { AppComponent } from './app.component';
 import { BookSearchModule } from './pages/bookSearch/book-search.module';
 import { TodoModule } from './pages/todo/todo.module';
 
@@ -20,6 +17,5 @@ import { TodoModule } from './pages/todo/todo.module';
     FormsModule,
   ],
   bootstrap: [AppComponent],
-  providers: [TodoService],
 })
 export class AppModule {}

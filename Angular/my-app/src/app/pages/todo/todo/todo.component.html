@@ -12,11 +12,11 @@
 <h2>{{ context }}</h2> -->
 
 <ul>
-  <!-- <app-todo-item
-    *ngFor="let item of todos"
+  <app-todo-item
+    *ngFor="let item of todos$ | async"
     [item]="item"
-    (emitter)="getTodoId($event)"
-  ></app-todo-item> -->
+    (emitter)="delectTodo($event)"
+  ></app-todo-item>
 
-  <li *ngFor="let item of todos$ | async">{{ item }}</li>
+  <!-- <li *ngFor="let item of todos$ | async">{{ item }}</li> -->
 </ul>

@@ -16,20 +16,20 @@ import { TodoService } from '../shared/todo.service';
   styleUrl: './todo-item.component.scss',
 })
 export class TodoItemComponent {
-  // @Input('item') todo!: Todo;
-  // @Output() emitter = new EventEmitter();
+  @Input('item') todo!: Todo;
+  @Output() emitter = new EventEmitter();
 
   constructor(private todoService: TodoService) {
     // console.log('from constructor: ', this.todo);
   }
   ngOnInit() {
-    this.todoService.todotSubject$.subscribe((data) =>
-      console.log('from todo item: ', data)
-    );
-    // console.log('from onInit: ', this.todo);
+    // this.todoService.todotSubject$.subscribe((data) =>
+    //   console.log('from todo item: ', data)
+    // );
+    console.log('from onInit: ', this.todo);
   }
 
   emitTodoId() {
-    // this.emitter.emit(this.todo.id);
+    this.emitter.emit(this.todo.id);
   }
 }
