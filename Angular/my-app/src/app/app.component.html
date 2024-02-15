@@ -1,1 +1,16 @@
-<app-todo></app-todo>
+<input type="text" [(ngModel)]="name" /> select component
+
+<div [ngSwitch]="name">
+  <div *ngSwitchCase="'todolist'">
+    <app-todo></app-todo>
+  </div>
+  <div *ngSwitchCase="'booklist'">
+    <app-booklist></app-booklist>
+  </div>
+  <div *ngSwitchCase="'directive'">
+    <app-directive />
+  </div>
+  <div *ngSwitchCase="'pipe'">
+    <app-pipe />
+  </div>
+</div>

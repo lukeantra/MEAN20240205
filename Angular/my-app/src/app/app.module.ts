@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BookSearchModule } from './pages/bookSearch/book-search.module';
 import { TodoModule } from './pages/todo/todo.module';
+import { SharedModule } from './shared/shared.module';
+import { PlayGroundModule } from './pages/play-ground/play-ground.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +17,8 @@ import { TodoModule } from './pages/todo/todo.module';
     BookSearchModule,
     TodoModule,
     FormsModule,
+    SharedModule,
+    PlayGroundModule,
   ],
   bootstrap: [AppComponent],
 })

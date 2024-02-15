@@ -6,7 +6,20 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { Subscription, fromEvent, of, switchMap, tap } from 'rxjs';
+import {
+  Subject,
+  Subscription,
+  debounceTime,
+  fromEvent,
+  interval,
+  mergeMap,
+  of,
+  switchMap,
+  takeUntil,
+  tap,
+  throttle,
+  throttleTime,
+} from 'rxjs';
 import { BookSearchService } from '../shared/book-search.service';
 
 @Component({
@@ -15,30 +28,37 @@ import { BookSearchService } from '../shared/book-search.service';
   styleUrl: './search-box.component.scss',
 })
 export class SearchBoxComponent implements AfterViewInit, OnDestroy {
-  private subscription = new Subscription();
+  private notifier = new Subject();
   @ViewChild('inputBox', { static: true }) inputBox!: ElementRef;
 
   constructor(private bookService: BookSearchService) {}
 
   ngOnInit(): void {
-    this.subscription = fromEvent<KeyboardEvent>(
-      this.inputBox.nativeElement,
-      'keyup'
-    )
+    fromEvent<KeyboardEvent>(this.inputBox.nativeElement, 'keyup')
       .pipe(
-        switchMap((e) => {
+        debounceTime(500),
+        // throttleTime(500),
+        mergeMap((e) => {
           const bookname = this.inputBox.nativeElement.value;
-          if (e.key === 'Enter') {
-            return this.bookService.getBooks(bookname);
-          }
-          return of([]);
-        })
+          // if (e.key === 'Enter') {
+          return this.bookService.getBooks(bookname);
+          // }
+          // return of([]);
+        }),
+        takeUntil(this.notifier)
       )
       .subscribe();
+
+    interval(1000).pipe(takeUntil(this.notifier)).subscribe(console.log);
   }
 
   ngAfterViewInit(): void {}
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.stopObs();
+  }
+
+  stopObs() {
+    this.notifier.next(null);
+    this.notifier.complete();
   }
 }
