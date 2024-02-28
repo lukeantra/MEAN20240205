@@ -9,6 +9,20 @@ import { TodoModule } from './pages/todo/todo.module';
 import { SharedModule } from './shared/shared.module';
 import { PlayGroundModule } from './pages/play-ground/play-ground.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { Router, RouterModule, Routes } from '@angular/router';
+
+import { TodoComponent } from './pages/todo/todo/todo.component';
+import { BooklistComponent } from './pages/bookSearch/booklist/booklist.component';
+import { TodoItemComponent } from './pages/todo/todo-item/todo-item.component';
+
+const routers: Routes = [
+  { path: 'todolist', component: TodoComponent },
+  { path: 'todoitem', component: TodoItemComponent },
+  { path: 'booklist', component: BooklistComponent },
+
+  { path: '', redirectTo: 'todolist', pathMatch: 'full' },
+  { path: '**', component: BooklistComponent },
+];
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +34,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     BookSearchModule,
     TodoModule,
     PlayGroundModule,
+
+    RouterModule.forRoot(routers),
   ],
   exports: [],
   bootstrap: [AppComponent],

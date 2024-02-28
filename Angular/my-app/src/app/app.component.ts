@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,11 @@ import { Component, inject } from '@angular/core';
 })
 export class AppComponent {
   name = 'todolist';
-  // constructor(private todoService: TodoService) {}
+
+  constructor(private router: Router) {}
+
+  navigateTo(to: string) {
+    this.router.navigate([to]);
+  }
 }
+// [baseUrl, 'todos', id].join('/')

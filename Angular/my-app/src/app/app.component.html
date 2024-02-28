@@ -1,4 +1,4 @@
-<input type="text" [(ngModel)]="name" /> select component
+<!-- <input type="text" [(ngModel)]="name" /> select component -->
 
 <!-- <div [ngSwitch]="name">
   <div *ngSwitchCase="'todolist'">
@@ -15,10 +15,23 @@
   </div>
 </div> -->
 
-@switch (name) { @case ('todolist') {
+<ul>
+  <li>
+    <button mat-raised-button (click)="navigateTo('todolist')">Todolist</button>
+  </li>
+  <li>
+    <button mat-raised-button [routerLink]="['booklist']">Booklist</button>
+  </li>
+</ul>
+
+<div>
+  <router-outlet></router-outlet>
+</div>
+
+<!-- @switch (name) { @case ('todolist') {
 <app-todo></app-todo>
 } @case ('booklist') {
 <app-booklist></app-booklist>
 } @case ('directive') {
 <app-directive />
-} }
+} } -->
