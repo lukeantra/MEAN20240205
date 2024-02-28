@@ -1,4 +1,4 @@
 <li>
   <span>{{ todo.id }}-{{ todo.title | limistLength : 30 }}</span>
-  <button (click)="emitTodoId()">X</button>
+  <button mat-fab (click)="emitTodoId()">X</button>
 </li>

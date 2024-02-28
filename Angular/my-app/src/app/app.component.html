@@ -1,6 +1,6 @@
 <input type="text" [(ngModel)]="name" /> select component
 
-<div [ngSwitch]="name">
+<!-- <div [ngSwitch]="name">
   <div *ngSwitchCase="'todolist'">
     <app-todo></app-todo>
   </div>
@@ -13,4 +13,12 @@
   <div *ngSwitchCase="'pipe'">
     <app-pipe />
   </div>
-</div>
+</div> -->
+
+@switch (name) { @case ('todolist') {
+<app-todo></app-todo>
+} @case ('booklist') {
+<app-booklist></app-booklist>
+} @case ('directive') {
+<app-directive />
+} }

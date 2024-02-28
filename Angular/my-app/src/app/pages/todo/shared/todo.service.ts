@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, from, map, tap } from 'rxjs';
 import { Todo } from './todo.interface';
+import { baseUrl } from '../todo.module';
 
 @Injectable()
 export class TodoService {
-  private readonly baseUrl = 'https://jsonplaceholder.typicode.com';
+  // private readonly baseUrl = 'https://jsonplaceholder.typicode.com';
   private todoPath = 'todos';
 
   todotSubject$ = new BehaviorSubject<Todo[]>([]);
@@ -16,7 +17,10 @@ export class TodoService {
   //   console.log('hello');
   // })
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(baseUrl) private baseUrl: string
+  ) {}
 
   // [[], [], []] Array<Array<T>> ==> Array<T>
   // Observable<observable<T>> ===> Observabel<T>

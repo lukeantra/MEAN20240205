@@ -8,19 +8,21 @@ import { BookSearchModule } from './pages/bookSearch/book-search.module';
 import { TodoModule } from './pages/todo/todo.module';
 import { SharedModule } from './shared/shared.module';
 import { PlayGroundModule } from './pages/play-ground/play-ground.module';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
+    SharedModule,
+
     BookSearchModule,
     TodoModule,
-    FormsModule,
-    SharedModule,
     PlayGroundModule,
   ],
   exports: [],
   bootstrap: [AppComponent],
+  providers: [provideAnimationsAsync()],
 })
 export class AppModule {}
