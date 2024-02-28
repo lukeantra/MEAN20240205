@@ -20,6 +20,7 @@ import { PlayGroundModule } from './pages/play-ground/play-ground.module';
     SharedModule,
     PlayGroundModule,
   ],
+  exports: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

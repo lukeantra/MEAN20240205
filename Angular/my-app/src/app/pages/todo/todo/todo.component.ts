@@ -6,31 +6,34 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
-  // template: ` <h1>Hello</h1> `,
   styleUrl: './todo.component.scss',
-  // styles: []
 })
 export class TodoComponent implements OnInit {
   // val;
   todos$!: Observable<Todo[]>;
+  sbp = new Subscription();
+  name = 'hello';
+  isDisable = true;
 
   // lifecycle;
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.todos$ = this.todoService.todotSubject$;
-    this.todoService.getTodos().subscribe();
+    this.sbp = this.todoService.getTodos().subscribe();
   }
   ngOnDestroy(): void {
-    // this.sbp.unsubscribe();
+    this.sbp.unsubscribe();
   }
 
   // // method;
-  // toggle() {
-  //   this.todos[0].completed = !this.todos[0].completed;
-  // }
+  toggle() {
+    this.name = 'world';
+    this.isDisable = !this.isDisable;
+  }
 
   delectTodo(id: number) {
+    console.log(id);
     this.todoService.delectTodo(id);
   }
 }

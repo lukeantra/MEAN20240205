@@ -10,7 +10,10 @@
   <input [(ngModel)]="context" />
 </div>
 <h2>{{ context }}</h2> -->
-
+<button *ngIf="isDisable">Button</button>
+<button (click)="toggle()">Toggle</button>
+<input type="text" [(ngModel)]="name" />
+<h1>{{ name }}</h1>
 <ul>
   <app-todo-item
     *ngFor="let item of todos$ | async"
