@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormGroup, NgForm } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,8 @@ import { FormGroup, NgForm } from '@angular/forms';
   styleUrls: ['./template-form.component.scss'],
 })
 export class TemplateFormComponent {
+  @ViewChild('sdiv') selecteddiv: any;
+
   onSubmit(contectForm: NgForm) {
     console.log(contectForm.valid);
   }

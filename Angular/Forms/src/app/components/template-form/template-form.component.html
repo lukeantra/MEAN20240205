@@ -8,13 +8,15 @@
       ngModel
       name="email"
       required
-      minlength="5"
       email
+      minlength="5"
       placeholder="input your email"
     />
   </div>
-  <div *ngIf="!email.valid && email.dirty && email.touched">
-    <div *ngIf="email.errors?.['required']">email is required!</div>
+  <div *ngIf="!email.valid || email.dirty || email.touched">
+    <div *ngIf="email.errors?.['required']" style="color: red">
+      email is required!
+    </div>
   </div>
 
   <div class="password">
@@ -22,6 +24,6 @@
   </div>
 
   <div class="btns">
-    <button type="submit" [disabled]="!contectForm.valid">Submit</button>
+    <button [disabled]="!contectForm.valid">Submit</button>
   </div>
 </form>

@@ -1,22 +1,22 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="selectAll">
-    <input type="checkbox" id="selectAll" formControlName="selectAll" />
-    <label for="selectAll">Select All</label>
+  <div>
+    <input type="checkbox" formControlName="selectall" id="selectall" />
+    <label for="selectall">Select All</label>
   </div>
 
   <ul formGroupName="options">
     <li *ngFor="let item of itemlist">
-      <input type="checkbox" [id]="item" [formControlName]="item" />
+      <input type="checkbox" [formControlName]="item" [id]="item" />
       <label [for]="item">{{ item }}</label>
     </li>
   </ul>
 
-  <button>Submit</button>
+  <button type="submit">Submit</button>
 </form>
 
-<h1>Selected Values</h1>
-<ul>
-  <li *ngFor="let item of selectedValues">{{ item }}</li>
-</ul>
+<hr />
 
-<button (click)="onClickHandler()">StopAllObs</button>
+<h2>Selected Values</h2>
+<ul>
+  <li *ngFor="let item of selected">{{ item }}</li>
+</ul>
