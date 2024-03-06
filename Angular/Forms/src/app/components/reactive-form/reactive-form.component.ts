@@ -52,10 +52,6 @@ export class ReactiveFormComponent implements OnInit, OnDestroy {
     });
     this.trackallitem();
     this.handleSelectAll();
-
-    // this.selectAll.valueChanges.subscribe((val) => {
-    //   console.log(val);
-    // });
   }
   ngOnDestroy(): void {
     this.stopObs();
@@ -67,7 +63,7 @@ export class ReactiveFormComponent implements OnInit, OnDestroy {
         tap((val) => {
           if (val && !this.selected.includes(title)) {
             this.selected.push(title);
-          } else {
+          } else if (!val) {
             this.selected = this.selected.filter((str) => title !== str);
           }
 
@@ -87,6 +83,7 @@ export class ReactiveFormComponent implements OnInit, OnDestroy {
     this.selectAll.valueChanges
       .pipe(
         tap((val) => {
+          console.log(val);
           this.setAllItemsValue(val);
         }),
         takeUntil(this.notifier)

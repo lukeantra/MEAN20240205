@@ -7,8 +7,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { Observable, of, Subject } from 'rxjs';
-import { debounceTime, map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ValidatorsService } from 'src/app/services/validators.service';
 
@@ -23,13 +22,12 @@ export class CrossieldvalidationComponent implements OnInit {
   get email(): FormControl {
     return this.form.get('email') as FormControl;
   }
-  // get pwd(): FormGroup {
-  //   return this.form.get('pwd') as FormGroup;
-  // }
+  get pwd(): FormGroup {
+    return this.form.get('pwd') as FormGroup;
+  }
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
     private validatorsService: ValidatorsService
   ) {}
 
@@ -38,45 +36,25 @@ export class CrossieldvalidationComponent implements OnInit {
       email: [
         '',
         [
-          this.minLen(5),
-          // Validators.minLength(5)
-          // Validators.required,
-          // Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
+          this.validatorsService.minLen(7),
+          // Validators.minLength(5),
+          Validators.required,
+          Validators.pattern(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/),
         ],
         [this.validatorsService.checkEmail],
       ],
 
-      // pwd: this.fb.group(
-      //   {
-      //     password: '',
-      //     confirm: '',
-      //   },
-      //   {
-      //     validators: [this.matchPwd],
-      //   }
-      // ),
+      pwd: this.fb.group(
+        {
+          password: '',
+          confirm: '',
+        },
+        {
+          validators: [this.validatorsService.matchPwd],
+        }
+      ),
     });
   }
-
-  minLen(limitednum: number): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value.length < limitednum) {
-        return { minlen: true };
-      }
-      return null;
-    };
-  }
-
-  // matchPwd(group: FormGroup): ValidationErrors | null {
-  //   const pwdval = group.get('password')?.value;
-  //   const cfmval = group.get('confirm')?.value;
-
-  //   console.log(pwdval, cfmval);
-  //   if (pwdval === cfmval) {
-  //     return null;
-  //   }
-  //   return { pwdNoMatch: true };
-  // }
 
   onSubmit() {
     console.log();
@@ -92,3 +70,11 @@ interface AsyncValidatorFn {
     | Promise<ValidationErrors | null>
     | Observable<ValidationErrors | null>;
 }
+
+// class AbstractControl {
+
+// }
+
+// class FormControl extends AbstractControl {
+
+// } // solid

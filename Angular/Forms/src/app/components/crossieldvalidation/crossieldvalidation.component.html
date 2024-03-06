@@ -5,21 +5,21 @@
   </div>
 
   <div *ngIf="!email.valid && (email.dirty || email.touched)">
-    <!-- <div *ngIf="email.errors?.['minlen']" class="invalid">
-      the min length is 5
-    </div> -->
+    <div *ngIf="email.errors?.['minlen']" class="invalid">
+      the min length is {{email.errors?.['limitednum']}}
+    </div>
     <div *ngIf="email.errors?.['hasemail']" class="invalid">
       email already exist! Try another...
     </div>
-    <!-- <div *ngIf="email.errors?.['required']" class="invalid">
+    <div *ngIf="email.errors?.['required']" class="invalid">
       email is required
     </div>
     <div *ngIf="email.errors?.['pattern']" class="invalid">
       pls input a valid email!
-    </div> -->
+    </div>
   </div>
 
-  <!-- <div formGroupName="pwd">
+  <div formGroupName="pwd">
     <div>
       <label for="password">password: </label>
       <input id="password" formControlName="password" />
@@ -33,7 +33,8 @@
     <div *ngIf="pwd.errors?.['pwdNoMatch']" class="invalid">
       pwd and cfm not match!
     </div>
-  </div> -->
+  </div>
 </form>
 
-<!-- {{ pwd.errors | json }} -->
+{{ email.errors | json }}
+{{ pwd.errors | json }}

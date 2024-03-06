@@ -31,9 +31,9 @@ export class SetvalidatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.myform = this.fb.group({
+      notifyVia: ['', Validators.required],
       email: [''],
       mobile: [''],
-      notifyVia: ['', Validators.required],
     });
 
     this.notifyVia?.valueChanges.subscribe((val) => {

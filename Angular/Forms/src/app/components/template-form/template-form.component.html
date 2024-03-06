@@ -13,7 +13,10 @@
       placeholder="input your email"
     />
   </div>
-  <div *ngIf="!email.valid || email.dirty || email.touched">
+  <div *ngIf="!email.valid && (email.dirty || email.touched)">
+    <div *ngIf="email.errors?.['email']" style="color: red">
+      please input a valid email!
+    </div>
     <div *ngIf="email.errors?.['required']" style="color: red">
       email is required!
     </div>
