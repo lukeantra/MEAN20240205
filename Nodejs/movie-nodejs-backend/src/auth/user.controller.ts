@@ -1,10 +1,24 @@
-import { RequestHandler } from "express";
-import { AppDataSource } from "../start/db_typeorm";
+import express, { RequestHandler, Request, Response } from "express";
+import { AppDataSource } from "../core/db_typeorm";
 import { User } from "./entities/user.entity";
+const userRouters = express.Router();
 
-export const getUsers: RequestHandler = async (req, res) => {
+const getUsers: RequestHandler = async (req, res) => {
+	console.log("hello");
 	const userRepo = AppDataSource.getRepository(User);
 	const users = await userRepo.find();
 
-	return res.status(200).json({ users });
+	res.status(200).send({ users });
 };
+
+const createUser: RequestHandler = async (
+	req: Request,
+	res: Response
+) => {
+	console.log(req.body);
+	res.json({ ...req.body });
+};
+
+userRouters.route("/").get(getUsers).post(createUser);
+
+export default userRouters;

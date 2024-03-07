@@ -1,13 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
-import { AppDataSource } from "./start/db_typeorm";
+import TypeOrmDbConnection from "./core/db_typeorm";
+import Routers from "./core/routes";
+
 const app = express();
 dotenv.config();
 
-// connectToMongodb();
-AppDataSource.initialize()
-	.then(() => console.log(`connection successful!`))
-	.catch((error) => console.log(error));
+TypeOrmDbConnection();
+Routers(app);
 
 const port = process.env.PORT || 4231;
 app.listen(port, () => {

@@ -12,3 +12,11 @@ export const AppDataSource = new DataSource({
 	entities: [User],
 	synchronize: true,
 });
+
+const TypeOrmDbConnection = () => {
+	AppDataSource.initialize()
+		.then(() => console.log(`connection successful!`))
+		.catch((error) => console.log(error));
+};
+
+export default TypeOrmDbConnection;
