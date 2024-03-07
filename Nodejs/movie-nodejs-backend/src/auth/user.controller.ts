@@ -16,9 +16,14 @@ const createUser: RequestHandler = async (
 	res: Response
 ) => {
 	console.log(req.body);
-	res.json({ ...req.body });
+	res.status(201).json({ ...req.body });
+};
+
+const deleteUser: RequestHandler = (req, res) => {
+	// req.params.id
 };
 
 userRouters.route("/").get(getUsers).post(createUser);
+// userRouters.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 
 export default userRouters;

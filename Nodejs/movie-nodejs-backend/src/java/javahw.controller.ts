@@ -31,7 +31,6 @@ const getUniversities = async (req: Request, res: Response) => {
 			buildUrlHelper(key, val, i);
 		}
 	});
-	console.log(resarr);
 
 	// * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ parallel sending requests;
 	const result = await axios
@@ -41,9 +40,10 @@ const getUniversities = async (req: Request, res: Response) => {
 		})
 		.then((list) => {
 			const map: any = {};
-			return list.flat().forEach((data: any) => {
+			list.flat().forEach((data: any) => {
 				map[data["name"]] = { ...data };
 			});
+			return Object.values(map);
 		});
 
 	res.status(200).json({

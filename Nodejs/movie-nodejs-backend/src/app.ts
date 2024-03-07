@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import TypeOrmDbConnection from "./core/db_typeorm";
 import Routers from "./core/routes";
 
+// const app = require('express')();
+// const fs = require('node:fs');
+
 const app = express();
 dotenv.config();
 
@@ -22,7 +25,7 @@ app.listen(port, () => {
   $ npm install -D nodemon typescript ts-node
   & edit tsconfig.json;
     "outDir": "./dist"  
-  & add start and build in package.josn;
+  & add start and build in package.josn script;
   	"start": "npx nodemon --exec ts-node ./src/app.ts",
 		"build": "tsc"
   & dotenv to use process.env;
@@ -40,5 +43,5 @@ app.listen(port, () => {
   $ npm install --save-dev typescript @types/node ts-node
 
   & send http request to other server;
-  npm install axios
+  $ npm install axios
 */
