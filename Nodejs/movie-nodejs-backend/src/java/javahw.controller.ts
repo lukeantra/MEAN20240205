@@ -6,18 +6,50 @@ const getUniversities = async (req: Request, res: Response) => {
 	const queryObj = { ...req.query } as { [key: string]: string };
 	const baseUrl = `http://universities.hipolabs.com/search?`;
 
-	const searchQuery = Object.entries(queryObj).reduce(
-		(acc: string, cur: [string, string]) => {
-			const [key, val] = cur;
-			acc += `${key}=${val}&`;
-			return acc;
-		},
-		""
-	);
-	const url = baseUrl + searchQuery;
-	const result = await axios.get(url);
+	// * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ build url list;
+	let resarr: string[] = [];
+	const buildUrlHelper = (key: string, val: string, i: number) => {
+		const arr = val.split(",").map((ele) => ele.trim());
+		const markarr: string[] = [];
+		arr.forEach((ele) => {
+			if (i === 0) {
+				resarr.push(`${baseUrl}&${key}=${ele}`);
+			} else {
+				resarr.forEach((link) => {
+					markarr.push(`${link}&${key}=${ele}`);
+				});
+			}
+		});
+		resarr = markarr.length ? [...markarr] : resarr;
+	};
+	Object.entries(queryObj).forEach(([key, val], i) => {
+		if (Array.isArray(val)) {
+			val.forEach((ele) => {
+				buildUrlHelper(key, ele, i);
+			});
+		} else if (typeof val === "string") {
+			buildUrlHelper(key, val, i);
+		}
+	});
+	console.log(resarr);
 
-	res.status(200).json({ ok: true, data: result.data });
+	// * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ parallel sending requests;
+	const result = await axios
+		.all(resarr.map((link) => axios.get(link)))
+		.then((list) => {
+			return list.map((ele) => ele.data);
+		})
+		.then((list) => {
+			const map: any = {};
+			return list.flat().forEach((data: any) => {
+				map[data["name"]] = { ...data };
+			});
+		});
+
+	res.status(200).json({
+		ok: true,
+		data: result,
+	});
 };
 
 // http://localhost:5566/api/v1/universities?country=United+Kingdom
