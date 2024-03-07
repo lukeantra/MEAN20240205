@@ -39,4 +39,6 @@ app.listen(port, () => {
   $ npm install typeorm mysql reflect-metadata
   $ npm install --save-dev typescript @types/node ts-node
 
+  & send http request to other server;
+  npm install axios
 */
