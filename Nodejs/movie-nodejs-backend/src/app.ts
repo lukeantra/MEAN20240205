@@ -1,10 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
-import { connectToMongodb } from "./start/db";
-
-dotenv.config();
+import { AppDataSource } from "./start/db_typeorm";
 const app = express();
-connectToMongodb();
+dotenv.config();
+
+// connectToMongodb();
+AppDataSource.initialize()
+	.then(() => console.log(`connection successful!`))
+	.catch((error) => console.log(error));
 
 const port = process.env.PORT || 4231;
 app.listen(port, () => {
@@ -25,7 +28,15 @@ app.listen(port, () => {
   & dotenv to use process.env;
   $ npm install dotenv
   $ npm install --save-dev @types/dotenv
+
   & mongoose;
   $ npm install mongoose
   $ npm install --save-dev @types/mongoose
+  & mySql;
+  $ npm install typescript @types/node mysql2
+  $ npm install --save-dev @types/mysql
+  & TypeOrm;
+  $ npm install typeorm mysql reflect-metadata
+  $ npm install --save-dev typescript @types/node ts-node
+
 */
