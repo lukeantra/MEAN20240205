@@ -1,21 +1,43 @@
-import express from "express";
+import express, { Express } from "express";
+import session from "express-session";
+import { ISession, TypeormStore } from "connect-typeorm";
+
 import dotenv from "dotenv";
-import TypeOrmDbConnection from "./core/db_typeorm";
+import TypeOrmDbConnection, {
+	AppDataSource,
+} from "./core/db_typeorm";
 import Routers from "./core/routes";
+import { applyPassportStrategy } from "./auth/passport-config";
+import { SessionEntity } from "./core/entities/SessionEntity";
+import { Repository } from "typeorm";
 
-// const app = require('express')();
-// const fs = require('node:fs');
+(async () => {
+	const port = process.env.PORT || 4231;
+	const app: Express = express();
+	const envSetup = dotenv.config();
+	// passport authentication;
+	const passport = applyPassportStrategy();
+	const connection = await TypeOrmDbConnection();
+	const sessionEntity: any =
+		AppDataSource.getRepository(SessionEntity);
 
-const app = express();
-dotenv.config();
+	app.use(
+		session({
+			store: new TypeormStore({ cleanupLimit: 2 }).connect(
+				sessionEntity
+			),
+			secret: process.env.JWT_SECRET || "",
+			resave: false,
+			saveUninitialized: false,
+			cookie: { secure: true, maxAge: 1000 * 3600 * 24 }, // Example cookie settings
+		})
+	);
 
-TypeOrmDbConnection();
-Routers(app);
-
-const port = process.env.PORT || 4231;
-app.listen(port, () => {
-	console.log(`Server is running on port: ${port}`);
-});
+	const routers = Routers(app);
+	app.listen(port, () => {
+		console.log(`Server is running on port: ${port}`);
+	});
+})().catch((error) => console.log(error));
 
 /* 
   & init project, install express;
@@ -44,4 +66,15 @@ app.listen(port, () => {
 
   & send http request to other server;
   $ npm install axios
+
+  & add passport;
+  $ npm install passport passport-jwt jsonwebtoken
+  $ npm install @types/passport @types/passport-jwt @types/jsonwebtoken --save-dev
+
+  & add class-validator;
+  $ npm install class-validator reflect-metadata
+
+  & add express-session;
+  $ npm install express-session
+  $ npm install @types/express-session @types/express --save-dev
 */
