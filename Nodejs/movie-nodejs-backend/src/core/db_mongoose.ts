@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
 import mongoose from "mongoose";
-dotenv.config();
 
 export const connectToMongodb = () => {
 	const db: string = process.env.DB || "";

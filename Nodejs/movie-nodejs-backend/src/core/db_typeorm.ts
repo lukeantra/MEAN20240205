@@ -1,8 +1,8 @@
 import "reflect-metadata";
 import dotenv from "dotenv";
+dotenv.config();
 import { DataSource } from "typeorm";
 import { User } from "../auth/entities/user.entity";
-dotenv.config();
 
 export const AppDataSource = new DataSource({
 	type: "mongodb",

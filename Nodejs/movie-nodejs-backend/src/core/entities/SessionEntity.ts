@@ -1,3 +1,4 @@
+import { ISession } from "connect-typeorm";
 import {
 	Entity,
 	Column,
@@ -14,22 +15,20 @@ export class SessionEntity implements ISession {
 
 	@Index()
 	@Column("bigint")
-	expiresAt!: number;
+	expiredAt!: number;
 
 	@Column("text")
 	data!: string;
+
+	@Column("text")
+	json!: string;
 
 	@CreateDateColumn()
 	createdAt!: Date;
 
 	@UpdateDateColumn()
 	updatedAt!: Date;
-}
 
-export interface ISession {
-	id: string;
-	expiresAt: number;
-	data: string;
-	createdAt: Date;
-	updatedAt: Date;
+	@UpdateDateColumn({ nullable: true })
+	destroyedAt?: Date;
 }

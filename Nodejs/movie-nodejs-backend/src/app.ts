@@ -1,15 +1,15 @@
 import express, { Express } from "express";
 import session from "express-session";
+import { Repository } from "typeorm";
 import { ISession, TypeormStore } from "connect-typeorm";
-
 import dotenv from "dotenv";
+
 import TypeOrmDbConnection, {
 	AppDataSource,
 } from "./core/db_typeorm";
 import Routers from "./core/routes";
-import { applyPassportStrategy } from "./auth/passport-config";
+import { applyPassportStrategy } from "./auth/passport-strategies/jwt.strategy";
 import { SessionEntity } from "./core/entities/SessionEntity";
-import { Repository } from "typeorm";
 
 (async () => {
 	const port = process.env.PORT || 4231;
@@ -18,7 +18,7 @@ import { Repository } from "typeorm";
 	// passport authentication;
 	const passport = applyPassportStrategy();
 	const connection = await TypeOrmDbConnection();
-	const sessionEntity: any =
+	const sessionEntity: Repository<ISession> =
 		AppDataSource.getRepository(SessionEntity);
 
 	app.use(
