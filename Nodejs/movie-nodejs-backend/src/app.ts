@@ -1,31 +1,26 @@
 import express, { Express } from "express";
+import passport from "passport";
 import session from "express-session";
-import { Repository } from "typeorm";
-import { ISession, TypeormStore } from "connect-typeorm";
 import dotenv from "dotenv";
+
+import "./auth/passport-strategies/local.strategy";
+import "./auth/passport-strategies/jwt.strategy";
 
 import TypeOrmDbConnection, {
 	AppDataSource,
 } from "./core/db_typeorm";
 import Routers from "./core/routes";
-import { applyPassportStrategy } from "./auth/passport-strategies/jwt.strategy";
 import { SessionEntity } from "./core/entities/SessionEntity";
 
 (async () => {
 	const port = process.env.PORT || 4231;
 	const app: Express = express();
 	const envSetup = dotenv.config();
-	// passport authentication;
-	const passport = applyPassportStrategy();
-	const connection = await TypeOrmDbConnection();
-	const sessionEntity: Repository<ISession> =
-		AppDataSource.getRepository(SessionEntity);
+
+	await TypeOrmDbConnection();
 
 	app.use(
 		session({
-			store: new TypeormStore({ cleanupLimit: 2 }).connect(
-				sessionEntity
-			),
 			secret: process.env.JWT_SECRET || "",
 			resave: false,
 			saveUninitialized: false,
@@ -33,7 +28,11 @@ import { SessionEntity } from "./core/entities/SessionEntity";
 		})
 	);
 
+	app.use(passport.initialize());
+	app.use(passport.session());
+
 	const routers = Routers(app);
+
 	app.listen(port, () => {
 		console.log(`Server is running on port: ${port}`);
 	});
