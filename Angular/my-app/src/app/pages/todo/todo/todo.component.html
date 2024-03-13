@@ -10,16 +10,28 @@
   <input [(ngModel)]="context" />
 </div>
 <h2>{{ context }}</h2> -->
-<button *ngIf="isDisable">Button</button>
+<!-- <button *ngIf="isDisable">Button</button>
 <button (click)="toggle()">Toggle</button>
-<input type="text" [(ngModel)]="name" />
-<h1>{{ name }}</h1>
-<ul>
-  <app-todo-item
-    *ngFor="let item of todos$ | async"
-    [item]="item"
-    (emitter)="delectTodo($event)"
-  ></app-todo-item>
+<input type="text"  />
+<h1>{{ name }}</h1> -->
 
-  <!-- <li *ngFor="let item of todos$ | async">{{ item }}</li> -->
-</ul>
+<main class="container">
+  <section class="todolist">
+    <header class="todolist-header">todolist</header>
+    <input
+      type="text"
+      class="todolist-input"
+      placeholder="Input your todo..."
+      [(ngModel)]="title"
+      (keyup.enter)="addTodo()"
+    />
+
+    <ul class="todolist-container">
+      <app-todo-item
+        *ngFor="let item of todos$ | async"
+        [item]="item"
+        (emitter)="delectTodo($event)"
+      ></app-todo-item>
+    </ul>
+  </section>
+</main>
