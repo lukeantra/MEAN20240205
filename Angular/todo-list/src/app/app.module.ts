@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoItemComponent } from './todo-item/todo-item.component';
-import { LimistLengthPipe } from './service/limist-length.pipe';
+import { LimitLengthPipe } from './service/limit-length.pipe';
 
 export const baseUrl = new InjectionToken<string>('');
 
@@ -16,7 +16,7 @@ export const baseUrl = new InjectionToken<string>('');
     AppComponent,
     TodoListComponent,
     TodoItemComponent,
-    LimistLengthPipe,
+    LimitLengthPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
