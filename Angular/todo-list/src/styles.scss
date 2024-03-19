@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --height-header: 60px;
+  --height-todolist: 600px;
+  --height-todolist-header: 30px;
+
+  --width-todolist: 400px;
+
+  --color-green: rgb(151, 253, 138);
+  --color-red-button: rgb(187, 9, 9);
+  --color-red-li-hover: rgb(36, 234, 9);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Protest Revolution", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
