@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -45,6 +45,7 @@ const routers: Routes = [
   ],
   exports: [],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [provideAnimationsAsync()],
 })
 export class AppModule {}

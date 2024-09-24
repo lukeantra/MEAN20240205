@@ -17,16 +17,20 @@
 
 <ul>
   <li>
-    <button mat-raised-button (click)="navigateTo('todolist')">Todolist</button>
+    <!-- <button mat-raised-button (click)="navigateTo('todolist')">Todolist</button> -->
+    <md-outlined-button (click)="navigateTo('todolist')">
+      Todolist
+    </md-outlined-button>
   </li>
   <li>
-    <button mat-raised-button [routerLink]="['booklist']">Booklist</button>
+    <md-filled-button>Complete</md-filled-button>
+    <!-- <button mat-raised-button [routerLink]="['booklist']">Booklist</button> -->
   </li>
 </ul>
 
-<div>
+<!-- <div>
   <router-outlet></router-outlet>
-</div>
+</div> -->
 
 <!-- @switch (name) { @case ('todolist') {
 <app-todo></app-todo>

@@ -17,8 +17,8 @@ describe('LimitLengthPipe', () => {
   });
 
   it('should not modify strings shorter than the limit', () => {
-    const result = pipe.transform('Hello', 5);
-    expect(result).toBe('Hello');
+    const result = pipe.transform('Hello World', 20);
+    expect(result).toBe('Hello World');
   });
 
   it('should handle empty string input', () => {

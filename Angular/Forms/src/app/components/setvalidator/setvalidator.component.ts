@@ -32,7 +32,7 @@ export class SetvalidatorComponent implements OnInit {
   ngOnInit(): void {
     this.myform = this.fb.group({
       notifyVia: ['', Validators.required],
-      email: [''],
+      email: ['', [Validators.minLength(3)]],
       mobile: [''],
     });
 
@@ -66,3 +66,11 @@ enum ValidteType {
   Email = 'Email',
   SMS = 'SMS',
 }
+
+// function triggerForEach(ele) {
+//   return (cur, i, curarr) => {
+//     return cur + ele;
+//   }
+// }
+// const arr = [1, 2, 3];
+// arr.forEach(triggerForEach(45))

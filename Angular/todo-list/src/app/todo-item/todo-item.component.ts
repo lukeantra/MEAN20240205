@@ -8,10 +8,15 @@ import { TodoService } from '../service/todo.service';
   styleUrl: './todo-item.component.scss',
 })
 export class TodoItemComponent {
-  @Input('item') todo!: Todo;
+  @Input('item') todo: Todo = {
+    id: 12,
+    title: 'hello',
+    userId: 34,
+    completed: false,
+  };
   @Output() emitter = new EventEmitter();
 
-  constructor(private todoService: TodoService) {
+  constructor() {
     // console.log('from constructor: ', this.todo);
   }
   ngOnInit() {

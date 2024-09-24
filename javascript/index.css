@@ -1,0 +1,28 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+.container {
+	height: 100vh;
+	width: 100vw;
+	background-color: royalblue;
+	z-index: 100; /* high z-index, but unnecessary for a single container */
+	position: relative; /* establishes a new stacking context */
+}
+.container h1 {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 100;
+}
+
+.container p {
+	background-color: bisque;
+	position: absolute;
+	z-index: 0; /* effective within its stacking context */
+	top: 0;
+	left: 0;
+	width: 200px;
+	height: 100px;
+}
